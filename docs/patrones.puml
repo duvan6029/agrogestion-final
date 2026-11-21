@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+package Observer {
+abstract class Observador { +actualizar(evento, db) }
+class AlertaStock
+class AuditorInventario
+class EventosInventario {
+ +suscribir(observador)
+ +retirar(observador)
+ +notificar(evento, db)
+}
+class AgroServicio { +registrar(tipo, datos, usuario) }
+Observador <|-- AlertaStock
+Observador <|-- AuditorInventario
+EventosInventario o--> "0..*" Observador
+AgroServicio --> EventosInventario
+}
+package "Template Method" {
+abstract class InformePlantilla {
+ +generar(filtros)
+ {abstract} +consultar(filtros)
+}
+class InformeSiembras
+class InformeInventario
+class InformeProduccion
+class InformeCostos
+class InformeRentabilidad
+InformePlantilla <|-- InformeSiembras
+InformePlantilla <|-- InformeInventario
+InformePlantilla <|-- InformeProduccion
+InformePlantilla <|-- InformeCostos
+InformePlantilla <|-- InformeRentabilidad
+InformePlantilla --> AgroServicio
+}
+@enduml
